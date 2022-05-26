@@ -15,6 +15,11 @@ weight= 0
 author= "GreasyCat"
 # avatar= "/images/me.png" # used for microformats
 description= "Nothing here to peek"
+style="auto"
+copyCodeButton=true
+disableSummary=false
+readMore=true
+paginationSinglePost=true
 
 [markup.goldmark.renderer]
 unsafe= true # enable raw HTML in Markdown
