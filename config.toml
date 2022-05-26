@@ -1,0 +1,19 @@
+baseURL = 'https://greasycat.github.io/'
+languageCode = 'en-us'
+title = 'A Greasy Site'
+theme = "anubis"
+
+[[menu.main]]
+identifier = "archive"
+name= "Archive"
+title= "Archive"
+url= "/posts/"
+weight= 0
+
+[[params]]
+author= "GreasyCat"
+# avatar= "/images/me.png" # used for microformats
+description= "Nothing here to peek"
+
+[markup.goldmark.renderer]
+unsafe= true # enable raw HTML in Markdown
