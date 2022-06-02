@@ -3,23 +3,69 @@ languageCode = 'en-us'
 title = 'A Greasy Site'
 theme = "anubis"
 publishDir = 'docs'
+summaryLength = 30
 
 [[menu.main]]
-identifier = "archive"
-name= "Archive"
-title= "Archive"
-url= "/posts/"
-weight= 0
+identifier = "all"
+name= "All"
+title= "All"
+url= "/"
+weight= 1
+
+[[menu.main]]
+identifier = "logs"
+name= "Logs"
+title= "Logs"
+url= "/posts/logs/"
+weight= 4
+
+[[menu.main]]
+identifier = "tools"
+name= "Tools"
+title= "Tools"
+url= "/posts/tools/"
+weight= 3
+
+[[menu.main]]
+identifier = "brain"
+name= "Brain"
+title= "Brain"
+url= "/posts/brain/"
+weight= 2
+
+[[menu.main]]
+identifier = "code"
+name= "Code"
+title= "Code"
+url= "/posts/code/"
+weight= 1
+
+#[[menu.main]]
+#identifier = "tags"
+#name = "Tags"
+#url = "/tags/"
+#weight = 0
+
+#[[menu.main]]
+#identifier = "categories"
+#name = "Categories"
+#url = "/categories/"
+#weight = 0
+
+#[taxonomies]
+#category = "categories"
+#tag = "tags"
 
 [[params]]
 author= "GreasyCat"
 # avatar= "/images/me.png" # used for microformats
-description= "Nothing here to peek"
+description= "PURRRING POWERRR!"
 style="auto"
 copyCodeButton=true
 disableSummary=false
 readMore=true
 paginationSinglePost=true
+
 
 [markup.goldmark.renderer]
 unsafe= true # enable raw HTML in Markdown
