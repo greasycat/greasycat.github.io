@@ -3,7 +3,7 @@ languageCode = 'en-us'
 title = 'A Greasy Site'
 theme = "anubis"
 publishDir = 'docs'
-summaryLength = 30
+
 canonifyURLs = true
 
 [[menu.main]]
@@ -41,21 +41,6 @@ title= "Code"
 url= "/posts/code/"
 weight= 1
 
-#[[menu.main]]
-#identifier = "tags"
-#name = "Tags"
-#url = "/tags/"
-#weight = 0
-
-#[[menu.main]]
-#identifier = "categories"
-#name = "Categories"
-#url = "/categories/"
-#weight = 0
-
-#[taxonomies]
-#category = "categories"
-#tag = "tags"
 
 [[params]]
 author= "GreasyCat"
@@ -66,6 +51,10 @@ copyCodeButton=true
 disableSummary=false
 readMore=true
 paginationSinglePost=true
+
+[[params.social]]
+id = "github"
+url = "https://github.com/greasycat/greasycat.github.io"
 
 
 [markup.goldmark.renderer]

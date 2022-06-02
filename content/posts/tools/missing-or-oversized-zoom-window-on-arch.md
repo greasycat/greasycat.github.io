@@ -9,7 +9,7 @@ draft: false
 The zoom client installed from AUR (and also the one from flatpak) had two weird issues:
 
 1. the window didn't show up
-2. the window is oversize and cannot be rescaled.
+2. the window is oversize and cannot be rescaled.<!--more-->
 
 
 Immediately, I checked the terminal output (there's no output) and the log file under `$HOME/.zoom/log` (nothing suspicious).
