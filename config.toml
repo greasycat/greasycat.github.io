@@ -1,10 +1,10 @@
-baseURL = 'https://greasycat.github.io/'
+baseURL = 'https://www.greasycat.xyz/'
 languageCode = 'en-us'
 title = 'A Greasy Site'
 theme = "anubis"
 publishDir = 'docs'
 
-canonifyURLs = true
+# canonifyURLs = true
 
 [[menu.main]]
 identifier = "all"

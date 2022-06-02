@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>archlinux on A Greasy Site</title>
-    <link>https://greasycat.github.io/tags/archlinux/</link>
+    <link>https://www.greasycat.xyz/tags/archlinux/</link>
     <description>A Greasy Site (archlinux)</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Jun 2022 16:32:52 -0700</lastBuildDate>
     
-    <atom:link href="https://greasycat.github.io/tags/archlinux/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.greasycat.xyz/tags/archlinux/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Missing or Oversized Zoom Window on Arch</title>
-      <link>https://greasycat.github.io/posts/tools/missing-or-oversized-zoom-window-on-arch/</link>
+      <link>https://www.greasycat.xyz/posts/tools/missing-or-oversized-zoom-window-on-arch/</link>
       <pubDate>Wed, 01 Jun 2022 16:32:52 -0700</pubDate>
       
-      <guid>https://greasycat.github.io/posts/tools/missing-or-oversized-zoom-window-on-arch/</guid>
+      <guid>https://www.greasycat.xyz/posts/tools/missing-or-oversized-zoom-window-on-arch/</guid>
       <description>&lt;h1 id=&#34;problem&#34; &gt;Problem
 &lt;span&gt;
     &lt;a href=&#34;#problem&#34;&gt;

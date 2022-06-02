@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>A Greasy Site</title>
-    <link>https://greasycat.github.io/</link>
+    <link>https://www.greasycat.xyz/</link>
     <description>A Greasy Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Jun 2022 16:32:52 -0700</lastBuildDate>
     
-    <atom:link href="https://greasycat.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.greasycat.xyz/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Missing or Oversized Zoom Window on Arch</title>
-      <link>https://greasycat.github.io/posts/tools/missing-or-oversized-zoom-window-on-arch/</link>
+      <link>https://www.greasycat.xyz/posts/tools/missing-or-oversized-zoom-window-on-arch/</link>
       <pubDate>Wed, 01 Jun 2022 16:32:52 -0700</pubDate>
       
-      <guid>https://greasycat.github.io/posts/tools/missing-or-oversized-zoom-window-on-arch/</guid>
+      <guid>https://www.greasycat.xyz/posts/tools/missing-or-oversized-zoom-window-on-arch/</guid>
       <description>&lt;h1 id=&#34;problem&#34; &gt;Problem
 &lt;span&gt;
     &lt;a href=&#34;#problem&#34;&gt;
@@ -43,24 +43,24 @@
     
     <item>
       <title>Spring</title>
-      <link>https://greasycat.github.io/posts/logs/spring/</link>
+      <link>https://www.greasycat.xyz/posts/logs/spring/</link>
       <pubDate>Wed, 01 Jun 2022 14:51:57 -0700</pubDate>
       
-      <guid>https://greasycat.github.io/posts/logs/spring/</guid>
+      <guid>https://www.greasycat.xyz/posts/logs/spring/</guid>
       <description>&lt;p&gt;Image from spring&lt;/p&gt;
 &lt;hr&gt;
 &lt;p&gt;Cat on Table
-&lt;img src=&#34;https://greasycat.github.io/img/greasycat.jpg&#34; alt=&#34;Greasycat&#34;&gt;&lt;/p&gt;
+&lt;img src=&#34;https://www.greasycat.xyz/img/greasycat.jpg&#34; alt=&#34;Greasycat&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Cat Eye&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://greasycat.github.io/img/cateye.jpg&#34; alt=&#34;Cateye&#34;&gt;&lt;/p&gt;</description>
+&lt;p&gt;&lt;img src=&#34;https://www.greasycat.xyz/img/cateye.jpg&#34; alt=&#34;Cateye&#34;&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
       <title>About</title>
-      <link>https://greasycat.github.io/about/</link>
+      <link>https://www.greasycat.xyz/about/</link>
       <pubDate>Wed, 25 May 2022 19:36:00 -0700</pubDate>
       
-      <guid>https://greasycat.github.io/about/</guid>
+      <guid>https://www.greasycat.xyz/about/</guid>
       <description>&lt;p&gt;This is the Greasy Cat&lt;/p&gt;
 </description>
     </item>
