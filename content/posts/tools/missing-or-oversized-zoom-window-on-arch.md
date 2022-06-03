@@ -5,7 +5,6 @@ tags: [archlinux, zoom, solved]
 draft: false
 ---
 
-# Problem
 The zoom client installed from AUR (and also the one from flatpak) had two weird issues:
 
 1. the window didn't show up

@@ -17,13 +17,7 @@
       <pubDate>Wed, 01 Jun 2022 16:32:52 -0700</pubDate>
       
       <guid>https://greasycat.github.io/posts/tools/missing-or-oversized-zoom-window-on-arch/</guid>
-      <description>&lt;h1 id=&#34;problem&#34; &gt;Problem
-&lt;span&gt;
-    &lt;a href=&#34;#problem&#34;&gt;
-        &lt;svg viewBox=&#34;0 0 28 23&#34; height=&#34;100%&#34; width=&#34;19&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&lt;path d=&#34;M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;path d=&#34;M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71&#34; fill=&#34;none&#34; stroke-linecap=&#34;round&#34; stroke-miterlimit=&#34;10&#34; stroke-width=&#34;2&#34;/&gt;&lt;/svg&gt;
-    &lt;/a&gt;
-&lt;/span&gt;
-&lt;/h1&gt;&lt;p&gt;The zoom client installed from AUR (and also the one from flatpak) had two weird issues:&lt;/p&gt;
+      <description>&lt;p&gt;The zoom client installed from AUR (and also the one from flatpak) had two weird issues:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;the window didn&amp;rsquo;t show up&lt;/li&gt;
 &lt;li&gt;the window is oversize and cannot be rescaled.&lt;/li&gt;
