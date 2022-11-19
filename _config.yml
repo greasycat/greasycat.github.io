@@ -108,4 +108,16 @@ theme: landscape
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+- type: rsync
+  host: 66.42.102.82
+  user: root
+  root: /var/www/www
+  port: 22
+  delete: true
+  verbose: true
+  ignore_errors: true
+- type: git
+  repo: https://github.com/greasycat/greasycat.github.io.git
+  branch: gh-pages
+
+
