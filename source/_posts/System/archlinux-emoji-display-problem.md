@@ -1,15 +1,17 @@
 ---
-title: "Emoji Not Showing Properly on Archlinux.md"
-date: 2022-06-02T19:26:39-07:00
+title: Emoji Not Showing Properly on Archlinux.md
+categories:
+  - System
+date: 2022-06-03 02:26:39
 ---
 
 The issue persisted for a long time. 
 
-Emojis in kconsole are displayed as blocks(cubes) even though the noto-font-emoji had been installed. Luckily I found a solution today <!--more-->
+Emojis in kconsole are displayed as blocks(cubes) even though the noto-font-emoji had been installed. I found a solution today 
 
 [Original Solution](https://flammie.github.io/dotfiles/fontconfig.html)
 
-Basically, I inserted the following lines to `/etc/font/fonts.conf` inside the `<font-config>` tag
+Insert the following lines to `/etc/font/fonts.conf` inside the `<font-config>` tag
 
 ```xml
 <match target="font">

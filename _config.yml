@@ -54,7 +54,7 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace: ''
-  wrap: true
+  wrap: false
   hljs: false
 prismjs:
   enable: false
@@ -103,7 +103,8 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: next
+scheme: Pisces
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -120,4 +121,10 @@ deploy:
   repo: https://github.com/greasycat/greasycat.github.io.git
   branch: gh-pages
 
+# Generate categories from directory-tree
+# Dependencies: https://github.com/xu-song/hexo-auto-category
+# depth: the max_depth of directory-tree you want to generate, should > 0
+auto_category:
+ enable: true
+ depth: 10
 
