@@ -4,9 +4,9 @@
 
 # Site
 title: Greasy Cat Log
-subtitle: ''
-description: ''
-keywords:
+subtitle: 'Code & Tech & Life'
+description: 'Just a random blog'
+keywords: code
 author: A Random Cat Friend
 language: en
 timezone: ''
@@ -117,9 +117,9 @@ deploy:
   delete: true
   verbose: true
   ignore_errors: true
-- type: git
-  repo: https://github.com/greasycat/greasycat.github.io.git
-  branch: gh-pages
+# - type: git
+#   repo: https://github.com/greasycat/greasycat.github.io.git
+#   branch: gh-pages
 
 # Generate categories from directory-tree
 # Dependencies: https://github.com/xu-song/hexo-auto-category
@@ -128,3 +128,83 @@ auto_category:
  enable: true
  depth: 10
 
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
+
+# sitemap:
+#   path: 
+#     - sitemap.xml
+#     - sitemap.txt
+#   # template: ./sitemap_template.xml
+#   # template_txt: ./sitemap_template.txt
+#   rel: false
+#   tags: true
+#
+seo:
+  html:
+    enable: false
+    # fix invalid html
+    fix: true
+    # exclude from minify
+    exclude:
+      - "*.min.{htm,html}"
+  # minify css
+  css:
+    enable: false
+    # If you want to customize the css minifier settings, you can put below
+    # exclude css from minifying, multiple supported
+    exclude:
+      - "**/*.min.css"
+      - "**/hexo-theme-next/**/*.css"
+      - "**/hexo-theme-next/**/*.styl"
+  # minify js
+  js:
+    enable: true
+    # If you want to customize the js minifier settings, you can put below
+    # exclude css from minifying, multiple supported
+    exclude:
+      - "**/*.min.js"
+      - "**/hexo-theme-next/**/*.js"
+    # this is terser options, you can customize minifier with terser options https://github.com/terser/terser
+    # below is config example
+    options:
+      compress:
+        dead_code: true
+      mangle:
+        toplevel: true
+        safari10: true
+  # add rich snippets on every posts and pages
+  schema:
+    article:
+      enable: true
+    breadcrumb:
+      enable: true
+    sitelink:
+      enable: true
+      # searchUrl: https://www.webmanajemen.com/search?q=
+  # this function still under development because JAVASCRIPT HEAP MEMORY and my device is 8GB RAM
+  img:
+    enable: true
+    # fix broken images
+    broken: false
+    # default broken images
+    default: https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg
+    # broken images methods
+    # serverside : process broken images from server side (caused javascript heap out of memory, if your post large and your device has insufficient memory)
+    # clientside : process broken image from client side browser with webjs
+    onerror: serverside
+  # external links fix
+  links:
+    # enable or false
+    enable: true
+    # allowed following links, otherwise nofollow others
+    exclude:
+      - webmanajemen.com
+      - web-manajemen.blogspot.com
+  # auto generate seo friendly sitemap on http://yoursite.com/sitemap.xml
+  # forked from yoast seo
+  sitemap: true
+  categories: true
