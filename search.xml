@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>archlinux-easy-setup-for-deep-learning</title>
+    <url>/2022/11/19/System/archlinux-easy-setup-for-deep-learning/</url>
+    <content><![CDATA[<h1 id="My-setup"><a href="#My-setup" class="headerlink" title="My setup"></a>My setup</h1><ul>
+<li>CPU: AMD Ryzen 9 5900X</li>
+<li>GPU: NVIDIA GeForce RTX 3090 FE</li>
+<li>Archlinux 6.0.8-arch1-1</li>
+<li>WM i3</li>
+</ul>
+<h1 id="Update-pacman-source"><a href="#Update-pacman-source" class="headerlink" title="Update pacman source"></a>Update pacman source</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -Syu</span><br></pre></td></tr></table></figure>
+
+<h1 id="Nvidia-driver"><a href="#Nvidia-driver" class="headerlink" title="Nvidia driver"></a>Nvidia driver</h1><p><strong>Skip</strong> if you’ve installed properitary nvidia driver</p>
+<ul>
+<li>for those need to switch nouveu to nvidia, please check archlinux wiki for more information</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S nvidia nvidia-utils</span><br><span class="line"><span class="comment"># or nvidia-dkms and linux-header for custom kernel</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="CUDA-amp-CUDNN"><a href="#CUDA-amp-CUDNN" class="headerlink" title="CUDA &amp; CUDNN"></a>CUDA &amp; CUDNN</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S cuda cudnn</span><br></pre></td></tr></table></figure>
+
+<p>If you havn’t set the path for dynamic&#x2F;shared library, it’s time to set it. Otherwise errors like <code># Unimplemented: DNN library is not found</code> might present when running CNN</p>
+<p>Add the following line to either <code>~/.bashrc</code> or <code>~/.bash_profile</code> or <code>.profile</code> (last two are preferred)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">export</span> LD_LIBRARY_PATH=<span class="string">&quot;<span class="variable">$&#123;LD_LIBRARY_PATH&#125;</span>:/usr/lib&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>Verify the installation</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /opt/cuda/extras/demo_suite</span><br><span class="line">./deviceQuery</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"> CUDA Device Query (Runtime API) version (CUDART static linking)</span><br><span class="line"></span><br><span class="line">Detected 1 CUDA Capable device(s)</span><br><span class="line"></span><br><span class="line">Device 0: &quot;NVIDIA GeForce RTX 3090&quot;</span><br><span class="line">  CUDA Driver Version / Runtime Version          11.8 / 11.8</span><br><span class="line">  CUDA Capability Major/Minor version number:    8.6</span><br><span class="line">  Total amount of global memory:                 24265 MBytes (25443893248 bytes)</span><br><span class="line">  (82) Multiprocessors, (128) CUDA Cores/MP:     10496 CUDA Cores</span><br><span class="line">  GPU Max Clock rate:                            1695 MHz (1.70 GHz)</span><br><span class="line">  Memory Clock rate:                             9751 Mhz</span><br><span class="line">  Memory Bus Width:                              384-bit</span><br><span class="line">  L2 Cache Size:                                 6291456 bytes</span><br><span class="line">  Maximum Texture Dimension Size (x,y,z)         1D=(131072), 2D=(131072, 65536), 3D=(16384, 16384, 16384)</span><br><span class="line">  Maximum Layered 1D Texture Size, (num) layers  1D=(32768), 2048 layers</span><br><span class="line">  Maximum Layered 2D Texture Size, (num) layers  2D=(32768, 32768), 2048 layers</span><br><span class="line">  Total amount of constant memory:               65536 bytes</span><br><span class="line">  Total amount of shared memory per block:       49152 bytes</span><br><span class="line">  Total number of registers available per block: 65536</span><br><span class="line">  Warp size:                                     32</span><br><span class="line">  Maximum number of threads per multiprocessor:  1536</span><br><span class="line">  Maximum number of threads per block:           1024</span><br><span class="line">  Max dimension size of a thread block (x,y,z): (1024, 1024, 64)</span><br><span class="line">  Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)</span><br><span class="line">  Maximum memory pitch:                          2147483647 bytes</span><br><span class="line">  Texture alignment:                             512 bytes</span><br><span class="line">  Concurrent copy and kernel execution:          Yes with 2 copy engine(s)</span><br><span class="line">  Run time limit on kernels:                     Yes</span><br><span class="line">  Integrated GPU sharing Host Memory:            No</span><br><span class="line">  Support host page-locked memory mapping:       Yes</span><br><span class="line">  Alignment requirement for Surfaces:            Yes</span><br><span class="line">  Device has ECC support:                        Disabled</span><br><span class="line">  Device supports Unified Addressing (UVA):      Yes</span><br><span class="line">  Device supports Compute Preemption:            Yes</span><br><span class="line">  Supports Cooperative Kernel Launch:            Yes</span><br><span class="line">  Supports MultiDevice Co-op Kernel Launch:      Yes</span><br><span class="line">  Device PCI Domain ID / Bus ID / location ID:   0 / 9 / 0</span><br><span class="line">  Compute Mode:</span><br><span class="line">     &lt; Default (multiple host threads can use ::cudaSetDevice() with device simultaneously) &gt;</span><br><span class="line"></span><br><span class="line">deviceQuery, CUDA Driver = CUDART, CUDA Driver Version = 11.8, CUDA Runtime Version = 11.8, NumDevs = 1, Device0 = NVIDIA GeForce RTX 3090</span><br><span class="line">Result = PASS</span><br></pre></td></tr></table></figure>
+
+<h1 id="Tensorflow-amp-Keras"><a href="#Tensorflow-amp-Keras" class="headerlink" title="Tensorflow &amp; Keras"></a>Tensorflow &amp; Keras</h1><p><code>python-tensorflow-opt-cuda</code> vs <code>python-tensorflow-cuda</code></p>
+<ul>
+<li>opt might be slightly faster as the package is optimized for certain intel cpu</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S python-tensorflow-cuda keras</span><br></pre></td></tr></table></figure>
+
+<h1 id="Try-it-out"><a href="#Try-it-out" class="headerlink" title="Try it out!"></a>Try it out!</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> layers  </span><br><span class="line"><span class="keyword">from</span> keras <span class="keyword">import</span> models  </span><br><span class="line">model = models.Sequential()  </span><br><span class="line">model.add(layers.Conv2D(<span class="number">32</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">&#x27;relu&#x27;</span>, input_shape=(<span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>)))  </span><br><span class="line">model.add(layers.MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>)))  </span><br><span class="line">model.add(layers.Conv2D(<span class="number">64</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">&#x27;relu&#x27;</span>))  </span><br><span class="line">model.add(layers.MaxPooling2D((<span class="number">2</span>, <span class="number">2</span>)))  </span><br><span class="line">model.add(layers.Conv2D(<span class="number">64</span>, (<span class="number">3</span>, <span class="number">3</span>), activation=<span class="string">&#x27;relu&#x27;</span>))  </span><br><span class="line">model.add(layers.Flatten())  </span><br><span class="line">model.add(layers.Dense(<span class="number">64</span>, activation=<span class="string">&#x27;relu&#x27;</span>))  </span><br><span class="line">model.add(layers.Dense(<span class="number">10</span>, activation=<span class="string">&#x27;softmax&#x27;</span>))  </span><br><span class="line"><span class="built_in">print</span>(model.summary())  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist  </span><br><span class="line"><span class="keyword">from</span> keras.utils <span class="keyword">import</span> to_categorical  </span><br><span class="line">(train_images, train_labels), (test_images, test_labels) = mnist.load_data()  </span><br><span class="line">  </span><br><span class="line">train_images = train_images.reshape((<span class="number">60000</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))  </span><br><span class="line">train_images = train_images.astype(<span class="string">&#x27;float32&#x27;</span>) / <span class="number">255</span>  </span><br><span class="line">test_images = test_images.reshape((<span class="number">10000</span>, <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>))  </span><br><span class="line">test_images = test_images.astype(<span class="string">&#x27;float32&#x27;</span>) / <span class="number">255</span>  </span><br><span class="line">train_labels = to_categorical(train_labels)  </span><br><span class="line">test_labels = to_categorical(test_labels)  </span><br><span class="line">model.<span class="built_in">compile</span>(optimizer=<span class="string">&#x27;rmsprop&#x27;</span>,  </span><br><span class="line">	loss=<span class="string">&#x27;categorical_crossentropy&#x27;</span>,  </span><br><span class="line">	metrics=[<span class="string">&#x27;accuracy&#x27;</span>])  </span><br><span class="line">model.fit(train_images, train_labels, epochs=<span class="number">5</span>, batch_size=<span class="number">64</span>)  </span><br><span class="line">  </span><br><span class="line">test_loss, test_acc = model.evaluate(test_images, test_labels)  </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;test_acc:&#x27;</span>, test_acc)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">2022-11-19 02:48:54.199427: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA</span><br><span class="line">To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.</span><br><span class="line">2022-11-19 02:48:54.280223: E tensorflow/stream_executor/cuda/cuda_blas.cc:2981] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered</span><br><span class="line">2022-11-19 02:48:55.103112: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.112502: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.112652: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.112918: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA</span><br><span class="line">To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.</span><br><span class="line">2022-11-19 02:48:55.114464: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.114573: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.114662: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.310342: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.310471: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.310579: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:980] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero</span><br><span class="line">2022-11-19 02:48:55.310662: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1616] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 21342 MB memory:  -&gt; device: 0, name: NVIDIA GeForce RTX 3090, pci bus id: 0000:09:00.0, compute capability: 8.6</span><br><span class="line">2022-11-19 02:48:55.310982: I tensorflow/core/common_runtime/process_util.cc:146] Creating new thread pool with default inter op setting: 2. Tune using inter_op_parallelism_threads for best performance.</span><br><span class="line">Model: &quot;sequential&quot;</span><br><span class="line">_________________________________________________________________</span><br><span class="line"> Layer (type)                Output Shape              Param #   </span><br><span class="line">=================================================================</span><br><span class="line"> conv2d (Conv2D)             (None, 26, 26, 32)        320       </span><br><span class="line">                                                                 </span><br><span class="line"> max_pooling2d (MaxPooling2D  (None, 13, 13, 32)       0         </span><br><span class="line"> )                                                               </span><br><span class="line">                                                                 </span><br><span class="line"> conv2d_1 (Conv2D)           (None, 11, 11, 64)        18496     </span><br><span class="line">                                                                 </span><br><span class="line"> max_pooling2d_1 (MaxPooling  (None, 5, 5, 64)         0         </span><br><span class="line"> 2D)                                                             </span><br><span class="line">                                                                 </span><br><span class="line"> conv2d_2 (Conv2D)           (None, 3, 3, 64)          36928     </span><br><span class="line">                                                                 </span><br><span class="line"> flatten (Flatten)           (None, 576)               0         </span><br><span class="line">                                                                 </span><br><span class="line"> dense (Dense)               (None, 64)                36928     </span><br><span class="line">                                                                 </span><br><span class="line"> dense_1 (Dense)             (None, 10)                650       </span><br><span class="line">                                                                 </span><br><span class="line">=================================================================</span><br><span class="line">Total params: 93,322</span><br><span class="line">Trainable params: 93,322</span><br><span class="line">Non-trainable params: 0</span><br><span class="line">_________________________________________________________________</span><br><span class="line">None</span><br><span class="line">Epoch 1/5</span><br><span class="line">2022-11-19 02:48:56.553880: I tensorflow/stream_executor/cuda/cuda_dnn.cc:384] Loaded cuDNN version 8600</span><br><span class="line">2022-11-19 02:48:56.923119: I tensorflow/stream_executor/cuda/cuda_blas.cc:1614] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.</span><br><span class="line">938/938 [==============================] - 3s 2ms/step - loss: 0.1702 - accuracy: 0.9469</span><br><span class="line">Epoch 2/5</span><br><span class="line">938/938 [==============================] - 2s 2ms/step - loss: 0.0460 - accuracy: 0.9853</span><br><span class="line">Epoch 3/5</span><br><span class="line">938/938 [==============================] - 2s 2ms/step - loss: 0.0321 - accuracy: 0.9902</span><br><span class="line">Epoch 4/5</span><br><span class="line">938/938 [==============================] - 2s 2ms/step - loss: 0.0254 - accuracy: 0.9919</span><br><span class="line">Epoch 5/5</span><br><span class="line">938/938 [==============================] - 2s 2ms/step - loss: 0.0204 - accuracy: 0.9940</span><br><span class="line">313/313 [==============================] - 0s 970us/step - loss: 0.0403 - accuracy: 0.9880</span><br><span class="line">test_acc: 0.9879999756813049</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>System</category>
+      </categories>
+      <tags>
+        <tag>archlinux</tag>
+        <tag>installation</tag>
+        <tag>deep-learning</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Emoji Not Showing Properly on Archlinux.md</title>
+    <url>/2022/06/03/System/archlinux-emoji-display-problem/</url>
+    <content><![CDATA[<p>The issue persisted for a long time. </p>
+<p>Emojis in kconsole are displayed as blocks(cubes) even though the noto-font-emoji had been installed. I found a solution today </p>
+<p><a href="https://flammie.github.io/dotfiles/fontconfig.html">Original Solution</a></p>
+<p>Insert the following lines to <code>/etc/font/fonts.conf</code> inside the <code>&lt;font-config&gt;</code> tag</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">match</span> <span class="attr">target</span>=<span class="string">&quot;font&quot;</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">test</span> <span class="attr">name</span>=<span class="string">&quot;family&quot;</span> <span class="attr">compare</span>=<span class="string">&quot;contains&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">string</span>&gt;</span>Emoji<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">test</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">edit</span> <span class="attr">name</span>=<span class="string">&quot;hinting&quot;</span> <span class="attr">mode</span>=<span class="string">&quot;assign&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">bool</span>&gt;</span>true<span class="tag">&lt;/<span class="name">bool</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">edit</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">edit</span> <span class="attr">name</span>=<span class="string">&quot;hintstyle&quot;</span> <span class="attr">mode</span>=<span class="string">&quot;assign&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">const</span>&gt;</span>hintslight<span class="tag">&lt;/<span class="name">const</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">edit</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">edit</span> <span class="attr">name</span>=<span class="string">&quot;embeddedbitmap&quot;</span> <span class="attr">mode</span>=<span class="string">&quot;assign&quot;</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">bool</span>&gt;</span>true<span class="tag">&lt;/<span class="name">bool</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">edit</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">match</span>&gt;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>System</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Missing or Oversized Zoom Window on Arch</title>
+    <url>/2022/06/02/System/archlinux-zoom-oversized-window/</url>
+    <content><![CDATA[<p>The zoom client installed from AUR (and also the one from flatpak) had two weird issues:</p>
+<ol>
+<li>the window didn’t show up</li>
+<li>the window is oversize and cannot be rescaled.</li>
+</ol>
+<p>checked the terminal output (there’s no output) and the log file under <code>$HOME/.zoom/log</code> (nothing suspicious).</p>
+<h1 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h1><p>After few google searches, I found a workaround</p>
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">vim <span class="variable">$HOME</span>/.config/zoomus.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight toml"><table><tr><td class="code"><pre><span class="line"><span class="attr">autoScale</span>=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<p>I reinstalled the zoom (restart also works) and it worked</p>
+]]></content>
+      <categories>
+        <category>System</category>
+      </categories>
+      <tags>
+        <tag>archlinux</tag>
+        <tag>zoom</tag>
+        <tag>solved</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Lazy Cat</title>
+    <url>/2022/11/19/Gallery/Cat/Funny/</url>
+    <content><![CDATA[<p><img data-src="/2022/11/18/Gallery/Cat/Funny/cateye.jpg"><br><img data-src="/2022/11/18/Gallery/Cat/Funny/greasycat.jpg"></p>
+]]></content>
+      <categories>
+        <category>Gallery</category>
+        <category>Cat</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Set up Sunshine steaming in Windows Hyper-V with GPU partitioning</title>
+    <url>/2025/04/10/Fun/setup_sunshine_hyperv/</url>
+    <content><![CDATA[<h1 id="Set-up-Sunshine-steaming-in-Windows-Hyper-V-with-GPU-Parititoning-enabled"><a href="#Set-up-Sunshine-steaming-in-Windows-Hyper-V-with-GPU-Parititoning-enabled" class="headerlink" title="Set up Sunshine steaming in Windows Hyper-V with GPU Parititoning enabled"></a>Set up Sunshine steaming in Windows Hyper-V with GPU Parititoning enabled</h1><p>Why gaming on a virtual machine?</p>
+<p>Gaming on a virtual machine (VM) can be an option for several reasons:</p>
+<ul>
+<li><strong>Isolation</strong>: Running games in a VM can provide a layer of isolation from the host system, which can be useful for security and stability.</li>
+<li><strong>Flexibility</strong>: VMs can be easily created, modified, and deleted, allowing for quick experimentation with different configurations or setups.</li>
+</ul>
+<span id="more"></span>
+<h2 id="Pre-requisites"><a href="#Pre-requisites" class="headerlink" title="Pre-requisites"></a>Pre-requisites</h2><ul>
+<li>A Windows machine with Hyper-V enabled</li>
+</ul>
+<p>I will briefly go over the steps to set up a Windows 10 VM.</p>
+<ol>
+<li>Make sure you have Hyper-V(Not available on Windows 10&#x2F;11 Home) enabled through Control Panel </li>
+<li>Getting an ISO image of Windows 10&#x2F;11, either through the Microsoft website or through other means.</li>
+<li>Open Hyper-V Manager and create a new VM, assigning reasonable resources to it.</li>
+<li>Attach the Windows 10&#x2F;11 ISO image to the VM and start it (Tips: you might need to disable Secure Boot in the VM settings and try tapping keys when you first boot the image).</li>
+<li>Proceed with the installation of Windows 10&#x2F;11.</li>
+</ol>
+<h2 id="GPU-Partitioning-adopted-from-This-guide"><a href="#GPU-Partitioning-adopted-from-This-guide" class="headerlink" title="GPU Partitioning adopted from This guide"></a>GPU Partitioning adopted from <a href="https://www.youtube.com/watch?v=KDc8lbE2I6I">This guide</a></h2><p>The GPU can be shared with the host and the VM, alternatively, you can try to enable GPU passthrough, but it is not covered in this guide.</p>
+<p>My Machine has 2 GPUs, one is the integrated AMD GPU and the other is a dedicated NVIDIA GPU. I will need to disable the integrated GPU in the Device Manager and assign the NVIDIA GPU to the VM.</p>
+<ol>
+<li>Open Device Manager and disable the integrated GPU.</li>
+<li>Mount the VM disk file by simply opening the file in Windows Explorer and assume it is the new <code>F:</code> drive.</li>
+<li>Create a folder called <code>HostDriverStore</code> in <code>F:\Windows\System32\</code> (This is the mounted drive).</li>
+<li>Copy the whole folder <code>C:/Windows/System32/DriverStore/FileRepository</code> to <code>F:\Windows\System32\HostDriverStore</code>.</li>
+<li>(Nvidia only) Copy everyfile starts with <code>nv</code> in <code>C:\Windows\System32\</code> to <code>F:\Windows\System32\</code>.</li>
+<li>(AMD) Amd probably has a similar folder, but I don’t have an AMD GPU to test it.</li>
+</ol>
+<p>Next we will need to paritition and assign the GPU to the VM. </p>
+<ol>
+<li>Open PowerShell ISE as administrator.</li>
+<li>Change the name of the <code>vm</code> variable to the name of your VM in the script below.</li>
+<li>Change the RAM size to your liking.</li>
+<li>Run the script below</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="code"><pre><span class="line"><span class="variable">$vm</span> = <span class="string">&quot;Game&quot;</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">Get-VMGpuPartitionAdapter</span> <span class="literal">-VMName</span> <span class="variable">$vm</span> <span class="literal">-ErrorAction</span> SilentlyContinue) &#123;</span><br><span class="line">   <span class="built_in">Remove-VMGpuPartitionAdapter</span> <span class="literal">-VMName</span> <span class="variable">$vm</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">Set-VM</span> <span class="literal">-GuestControlledCacheTypes</span> <span class="variable">$true</span> <span class="literal">-VMName</span> <span class="variable">$vm</span></span><br><span class="line"><span class="built_in">Set-VM</span> <span class="literal">-LowMemoryMappedIoSpace</span> <span class="number">1</span>Gb <span class="literal">-VMName</span> <span class="variable">$vm</span></span><br><span class="line"><span class="built_in">Set-VM</span> <span class="literal">-HighMemoryMappedIoSpace</span> <span class="number">32</span>Gb <span class="literal">-VMName</span> <span class="variable">$vm</span></span><br><span class="line"><span class="built_in">Add-VMGpuPartitionAdapter</span> <span class="literal">-VMName</span> <span class="variable">$vm</span></span><br></pre></td></tr></table></figure>
+
+<p>Last step before we start the machine is to disable the <code>Checkpoint</code> feature in Hyper-V.</p>
+<ol>
+<li>Open Hyper-V Manager and select the VM.</li>
+<li>Click on <code>Settings</code> and disable <code>Checkpoints</code>.</li>
+<li>Now start the VM and you should see the graphic card in in Device Manager.</li>
+</ol>
+<h1 id="Install-Virtual-Audio-Device"><a href="#Install-Virtual-Audio-Device" class="headerlink" title="Install Virtual Audio Device"></a>Install Virtual Audio Device</h1><p>We need a virtual audio device for sunshine to steam audio. You can use the Virtual Audio Device from the <code>VB-Cable</code> project or the <code>Virtual Audio Cable</code> project.</p>
+<ol>
+<li>Download either <code>VB-Cable</code> or <code>Virtual Audio Cable</code> and Install it.</li>
+<li>You should see the virtual audio device in the device manager (it will not appear in <code>Sound</code> settings)</li>
+</ol>
+<h1 id="LAN-access"><a href="#LAN-access" class="headerlink" title="LAN access"></a>LAN access</h1><p>If you want to access the VM from another device in local network, you can do port forwarding (not covered here) or simply add an external network adapter to the VM.</p>
+<ol>
+<li>Open Hyper-V Manager and select the Network Switch on the right side</li>
+<li>Click on <code>Virtual Switch Manager</code> and create a new <code>External</code> network switch.</li>
+<li>Toggle the share network adapter option</li>
+<li>Open the VM settings and add a new network adapter and select the external network switch.</li>
+</ol>
+<h1 id="Install-Sunshine"><a href="#Install-Sunshine" class="headerlink" title="Install Sunshine"></a>Install Sunshine</h1><p>Last step is to install sunshine on the VM and you should be able to connect to it.</p>
+]]></content>
+      <categories>
+        <category>Fun</category>
+      </categories>
+      <tags>
+        <tag>hyperv, sunshine, gaming</tag>
+      </tags>
+  </entry>
+</search>
