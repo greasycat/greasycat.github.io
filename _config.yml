@@ -109,17 +109,9 @@ scheme: Pisces
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-- type: rsync
-  host: 66.42.102.82
-  user: root
-  root: /var/www/www
-  port: 22
-  delete: true
-  verbose: true
-  ignore_errors: true
-# - type: git
-#   repo: https://github.com/greasycat/greasycat.github.io.git
-#   branch: gh-pages
+- type: git
+  repo: git@github.com:greasycat/greasycat.github.io
+  branch: gh-pages
 
 # Generate categories from directory-tree
 # Dependencies: https://github.com/xu-song/hexo-auto-category
