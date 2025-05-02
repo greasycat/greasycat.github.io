@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="Fm-pBETJQ_Tiu0Q_X2THstj0Bn-wTWnb3nq6WE0Z8UQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.greasycat.xyz","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Okay, now we have matrices and the activation functions, it’s time to build up the layers.For simplicity and purpose of the project, I will not gives the layers more abstraction by making it an interf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Very Naive Neural Network in C++ Part 3 Layers">
+<meta property="og:url" content="https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/index.html">
+<meta property="og:site_name" content="Greasy Cat Log">
+<meta property="og:description" content="Okay, now we have matrices and the activation functions, it’s time to build up the layers.For simplicity and purpose of the project, I will not gives the layers more abstraction by making it an interf">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-06T03:15:34.000Z">
+<meta property="article:modified_time" content="2022-12-16T23:58:48.323Z">
+<meta property="article:author" content="A Random Cat Friend">
+<meta property="article:tag" content="deep-learning">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="machine-learning">
+<meta property="article:tag" content="neural-network">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/","path":"2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/","title":"Very Naive Neural Network in C++ Part 3 Layers"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Very Naive Neural Network in C++ Part 3 Layers | Greasy Cat Log</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Greasy Cat Log</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Code & Tech & Life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Initialization-of-weights-and-bias"><span class="nav-number">1.</span> <span class="nav-text">Initialization of weights and bias</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Forward-propagation"><span class="nav-number">2.</span> <span class="nav-text">Forward propagation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Backward-propagation"><span class="nav-number">3.</span> <span class="nav-text">Backward propagation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Other-methods"><span class="nav-number">4.</span> <span class="nav-text">Other methods</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">A Random Cat Friend</p>
+  <div class="site-description" itemprop="description">Just a random blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/greasycat" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;greasycat" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="A Random Cat Friend">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Greasy Cat Log">
+      <meta itemprop="description" content="Just a random blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Very Naive Neural Network in C++ Part 3 Layers | Greasy Cat Log">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Very Naive Neural Network in C++ Part 3 Layers
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-05 22:15:34" itemprop="dateCreated datePublished" datetime="2021-01-05T22:15:34-05:00">2021-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-12-16 18:58:48" itemprop="dateModified" datetime="2022-12-16T18:58:48-05:00">2022-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Code/" itemprop="url" rel="index"><span itemprop="name">Code</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Okay, now we have matrices and the activation functions, it’s time to build up the layers.<br>For simplicity and purpose of the project, I will not gives the layers more abstraction by making it an interface and builds the subsequent layer above that. For now, I will put activation and non-activation layers together.</p>
+<span id="more"></span>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../Math/ActivationFunction.h&quot;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;random&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;memory&gt;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Layer</span> &#123;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">    <span class="comment">// Constructor for input layer, which has no weights and biases  </span></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Layer</span><span class="params">(<span class="type">int</span> inputSize, <span class="type">int</span> outputSize)</span></span>;  </span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Layer</span><span class="params">(<span class="type">int</span> inputSize, <span class="type">int</span> outputSize, Matrix weights, Matrix biases)</span></span>;  </span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Layer</span><span class="params">(ActivationFunctionType activationFunctionType)</span></span>;  </span><br><span class="line"></span><br><span class="line">	<span class="comment">//Forward propagation</span></span><br><span class="line">    <span class="function">Matrix <span class="title">forwardPropagation</span><span class="params">(<span class="type">const</span> Matrix&amp; inputData)</span></span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Backward propagation  </span></span><br><span class="line">    <span class="function">Matrix <span class="title">backwardPropagation</span><span class="params">(<span class="type">const</span> Matrix&amp; error, <span class="type">double</span> learningRate)</span></span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Getters  </span></span><br><span class="line">    <span class="function">Matrix <span class="title">getWeights</span><span class="params">()</span></span>;  </span><br><span class="line">    <span class="function">Matrix <span class="title">getBiases</span><span class="params">()</span></span>;  </span><br><span class="line">    <span class="function">Matrix <span class="title">getInput</span><span class="params">()</span></span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getInputSize</span><span class="params">()</span> <span class="type">const</span></span>;  </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getOutputSize</span><span class="params">()</span> <span class="type">const</span></span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="type">bool</span> <span class="title">isActivationLayer</span><span class="params">()</span> <span class="type">const</span></span>;  </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setActivationType</span><span class="params">(ActivationFunctionType activationType)</span></span>;  </span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span>:  </span><br><span class="line">    Matrix weights;  </span><br><span class="line">    Matrix biases;  </span><br><span class="line">    ActivationFunctionType activationFunctionType;  </span><br><span class="line">    Matrix input;  </span><br><span class="line">    <span class="type">int</span> inputSize;  </span><br><span class="line">    <span class="type">int</span> outputSize;  </span><br><span class="line">  </span><br><span class="line">    <span class="function">ActivationFunctionType <span class="title">getActivationType</span><span class="params">(ActivationFunctionType activationType)</span></span>;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="Initialization-of-weights-and-bias"><a href="#Initialization-of-weights-and-bias" class="headerlink" title="Initialization of weights and bias"></a>Initialization of weights and bias</h1><p>So here we will generate the weights and bias randomly by a normal distribution<br>The initial values are actually crucial to our naive design</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Layer.h&quot;</span>  </span></span><br><span class="line">Layer::<span class="built_in">Layer</span>(ActivationFunctionType activationFunctionType) : <span class="built_in">weights</span>(Matrix::<span class="built_in">EmptyMatrix</span>()),  </span><br><span class="line">                                                              <span class="built_in">biases</span>(Matrix::<span class="built_in">EmptyMatrix</span>()),  </span><br><span class="line">                                                              <span class="built_in">input</span>(Matrix::<span class="built_in">EmptyMatrix</span>()), <span class="built_in">inputSize</span>(<span class="number">0</span>), <span class="built_in">outputSize</span>(<span class="number">0</span>),  </span><br><span class="line">                                                              <span class="built_in">activationFunctionType</span>(activationFunctionType) &#123;&#125;  </span><br><span class="line">  </span><br><span class="line">Layer::<span class="built_in">Layer</span>(<span class="type">int</span> inputSize, <span class="type">int</span> outputSize) : <span class="built_in">weights</span>(inputSize, outputSize),  </span><br><span class="line">                                              <span class="built_in">biases</span>(<span class="number">1</span>, outputSize),  </span><br><span class="line">                                              <span class="built_in">input</span>(Matrix::<span class="built_in">EmptyMatrix</span>()),  </span><br><span class="line">                                              <span class="built_in">inputSize</span>(inputSize),  </span><br><span class="line">                                              <span class="built_in">outputSize</span>(outputSize),  </span><br><span class="line">                                              <span class="built_in">activationFunctionType</span>(ActivationFunctionType::NONE) &#123;  </span><br><span class="line">    weights = <span class="built_in">Matrix</span>(inputSize, outputSize);  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Set up random number generator  </span></span><br><span class="line">    std::random_device rd;  </span><br><span class="line">    <span class="function">std::mt19937 <span class="title">gen</span><span class="params">(rd())</span></span>;  </span><br><span class="line">    <span class="function">std::normal_distribution&lt;<span class="type">double</span>&gt; <span class="title">weights_distribution</span><span class="params">(inputSize, outputSize)</span></span>;  </span><br><span class="line">    <span class="function">std::normal_distribution&lt;<span class="type">double</span>&gt; <span class="title">bias_distribution</span><span class="params">(<span class="number">1</span>, outputSize)</span></span>;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Initialize weights and biases with random values from normal distribution  </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; inputSize; i++) &#123;  </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; outputSize; j++) &#123;  </span><br><span class="line">            <span class="keyword">this</span>-&gt;weights.<span class="built_in">changeAt</span>(i, j, <span class="built_in">weights_distribution</span>(gen)/ <span class="built_in">sqrt</span>(inputSize+outputSize));  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; outputSize; i++) &#123;  </span><br><span class="line">        <span class="keyword">this</span>-&gt;biases.<span class="built_in">changeAt</span>(<span class="number">0</span>, i, <span class="built_in">bias_distribution</span>(gen)/ <span class="built_in">sqrt</span>(inputSize+outputSize));  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">this</span>-&gt;weights.<span class="built_in">print</span>();  </span><br><span class="line">    <span class="keyword">this</span>-&gt;biases.<span class="built_in">print</span>();  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<h1 id="Forward-propagation"><a href="#Forward-propagation" class="headerlink" title="Forward propagation"></a>Forward propagation</h1><ul>
+<li>For non-activation layer, we will simply sum up the product of each x and weights and plus the bias. So the information will be changed and transformed into the dimension of the inputSize times the output size<br>$$Y&#x3D;XW+B$$</li>
+<li>For activation layer, we just apply the activation function and return the tensor to next layer<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Matrix <span class="title">Layer::forwardPropagation</span><span class="params">(<span class="type">const</span> Matrix &amp;inputData)</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">this</span>-&gt;input = inputData;  </span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;activationFunctionType == ActivationFunctionType::NONE) &#123;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>-&gt;biases + <span class="keyword">this</span>-&gt;input.<span class="built_in">dot</span>(<span class="keyword">this</span>-&gt;weights);  </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">        Matrix results = ActivationFunction::<span class="built_in">activation</span>(inputData, activationFunctionType);  </span><br><span class="line">        <span class="keyword">return</span> results;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Backward-propagation"><a href="#Backward-propagation" class="headerlink" title="Backward propagation"></a>Backward propagation</h1><p>The clear part of the neural network is to find a set of weights for each layer that minimize the error, and the most common way is to find the gradient and move the weights and biases bits by bits based on the gradients.</p>
+<p>We have to use chain rule to get the information from the previous layer (assume has <code>n</code> nodes)<br>$$<br>\frac{\partial E}{\partial W} &#x3D; \frac{\partial E}{\partial w_{ij}} &#x3D; \sum_{k &#x3D; 1}^{n} \frac{\partial E}{\partial k_j} \frac{\partial y_k}{\partial w_{ij}} &#x3D;\sum_{k &#x3D; 1}^{n} \frac{\partial E}{\partial y_j} x_{i}&#x3D;X^t \frac{\partial E}{\partial Y}<br>$$</p>
+<p>$$<br>\frac{\partial E}{\partial B_i} &#x3D; \sum_{j &#x3D; 1}^{n} \frac{\partial E}{\partial y_j} \frac{\partial y_j}{\partial b_i} &#x3D;\sum_{j &#x3D; 1}^{n} \frac{\partial E}{\partial y_j} &#x3D; \frac{\partial E}{\partial Y}<br>$$</p>
+<p>$$<br>\frac{\partial E}{\partial X_i} &#x3D; \sum_{j &#x3D; 1}^{n} \frac{\partial E}{\partial y_j} \frac{\partial y_j}{\partial x_i} &#x3D;\sum_{j &#x3D; 1}^{n} \frac{\partial E}{\partial y_j} w_{ij}<br>$$</p>
+<p>$$<br>\frac{\partial E}{\partial X} &#x3D; \frac{\partial E}{\partial Y}W^t<br>$$</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// error is dE/DY</span></span><br><span class="line"><span class="function">Matrix <span class="title">Layer::backwardPropagation</span><span class="params">(<span class="type">const</span> Matrix &amp;error, <span class="type">double</span> learningRate)</span> </span>&#123;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// If the layer is not the activation layer  </span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;activationFunctionType == ActivationFunctionType::NONE) &#123;  </span><br><span class="line">		<span class="comment">// dE/dX</span></span><br><span class="line">        Matrix previousError = error.<span class="built_in">dot</span>(<span class="keyword">this</span>-&gt;weights.<span class="built_in">transpose</span>());  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// Calculate gradient of weights and biases  </span></span><br><span class="line">        <span class="comment">// dE/dW</span></span><br><span class="line">        Matrix gradientOfWeights = <span class="keyword">this</span>-&gt;input.<span class="built_in">transpose</span>().<span class="built_in">dot</span>(error);  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// dE/dB, just for better understanding  </span></span><br><span class="line">        <span class="type">const</span> Matrix &amp;gradientOfBiases = error;  </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// Update weights and biases  </span></span><br><span class="line">        <span class="keyword">this</span>-&gt;weights -= gradientOfWeights * learningRate;  </span><br><span class="line">        <span class="keyword">this</span>-&gt;biases -= gradientOfBiases * learningRate;  </span><br><span class="line">        <span class="keyword">return</span> previousError;  </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">        <span class="keyword">return</span> ActivationFunction::<span class="built_in">derivative</span>(<span class="keyword">this</span>-&gt;input, <span class="keyword">this</span>-&gt;activationFunctionType) * error;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="Other-methods"><a href="#Other-methods" class="headerlink" title="Other methods"></a>Other methods</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Matrix <span class="title">Layer::getWeights</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>-&gt;weights;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function">Matrix <span class="title">Layer::getBiases</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>-&gt;biases;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function">Matrix <span class="title">Layer::getInput</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>-&gt;input;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">Layer::getInputSize</span><span class="params">()</span> <span class="type">const</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> inputSize;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">Layer::getOutputSize</span><span class="params">()</span> <span class="type">const</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> outputSize;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">Layer::isActivationLayer</span><span class="params">()</span> <span class="type">const</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>-&gt;activationFunctionType != ActivationFunctionType::NONE;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Layer::setActivationType</span><span class="params">(ActivationFunctionType activationType)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">this</span>-&gt;activationFunctionType = activationType;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function">ActivationFunctionType <span class="title">Layer::getActivationType</span><span class="params">(ActivationFunctionType activationType)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>-&gt;activationFunctionType;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">Layer::<span class="built_in">Layer</span>(<span class="type">int</span> inputSize, <span class="type">int</span> outputSize, Matrix weights, Matrix biases):  </span><br><span class="line">        <span class="built_in">weights</span>(weights), <span class="built_in">biases</span>(biases), <span class="built_in">input</span>(Matrix::<span class="built_in">EmptyMatrix</span>()), <span class="built_in">inputSize</span>(inputSize), <span class="built_in">outputSize</span>(outputSize),  </span><br><span class="line">        <span class="built_in">activationFunctionType</span>(ActivationFunctionType::NONE) &#123;&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/deep-learning/" rel="tag"># deep-learning</a>
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/machine-learning/" rel="tag"># machine-learning</a>
+              <a href="/tags/neural-network/" rel="tag"># neural-network</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/05/Code/Naive-Neural-Network-in-Cpp-2/" rel="prev" title="Very Naive Neural Network in C++ Part 2 Activation functions">
+                  <i class="fa fa-chevron-left"></i> Very Naive Neural Network in C++ Part 2 Activation functions
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/01/05/Code/Naive-Neural-Network-in-Cpp-4%20Network/" rel="next" title="Very Naive Neural Network in C++ Part 4 Network">
+                  Very Naive Neural Network in C++ Part 4 Network <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">A Random Cat Friend</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"greasycat","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

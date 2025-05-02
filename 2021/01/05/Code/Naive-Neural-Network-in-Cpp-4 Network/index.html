@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="Fm-pBETJQ_Tiu0Q_X2THstj0Bn-wTWnb3nq6WE0Z8UQ">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha256-Z1K5uhUaJXA7Ll0XrZ/0JhX4lAtZFpT6jkKrEDT0drU=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.greasycat.xyz","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.14.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Ok this is the final bit. We need the network to wrap things up and do the training But again, we need some loss functions to determine the errors we gonna put into back propagation. I will use a simp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Very Naive Neural Network in C++ Part 4 Network">
+<meta property="og:url" content="https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-4%20Network/index.html">
+<meta property="og:site_name" content="Greasy Cat Log">
+<meta property="og:description" content="Ok this is the final bit. We need the network to wrap things up and do the training But again, we need some loss functions to determine the errors we gonna put into back propagation. I will use a simp">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-01-06T03:32:23.000Z">
+<meta property="article:modified_time" content="2022-12-16T23:58:17.462Z">
+<meta property="article:author" content="A Random Cat Friend">
+<meta property="article:tag" content="deep-learning">
+<meta property="article:tag" content="c++">
+<meta property="article:tag" content="machine-learning">
+<meta property="article:tag" content="neural-network">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-4%20Network/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-4%20Network/","path":"2021/01/05/Code/Naive-Neural-Network-in-Cpp-4 Network/","title":"Very Naive Neural Network in C++ Part 4 Network"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Very Naive Neural Network in C++ Part 4 Network | Greasy Cat Log</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Greasy Cat Log</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Code & Tech & Life</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Network"><span class="nav-number">1.</span> <span class="nav-text">Network</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Add-layers"><span class="nav-number">2.</span> <span class="nav-text">Add layers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Predict"><span class="nav-number">3.</span> <span class="nav-text">Predict</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Test-the-code"><span class="nav-number">4.</span> <span class="nav-text">Test the code</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">A Random Cat Friend</p>
+  <div class="site-description" itemprop="description">Just a random blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/greasycat" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;greasycat" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-4%20Network/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="A Random Cat Friend">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Greasy Cat Log">
+      <meta itemprop="description" content="Just a random blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Very Naive Neural Network in C++ Part 4 Network | Greasy Cat Log">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Very Naive Neural Network in C++ Part 4 Network
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-05 22:32:23" itemprop="dateCreated datePublished" datetime="2021-01-05T22:32:23-05:00">2021-01-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-12-16 18:58:17" itemprop="dateModified" datetime="2022-12-16T18:58:17-05:00">2022-12-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Code/" itemprop="url" rel="index"><span itemprop="name">Code</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/05/Code/Naive-Neural-Network-in-Cpp-4%20Network/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/05/Code/Naive-Neural-Network-in-Cpp-4 Network/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>Ok this is the final bit. We need the network to wrap things up and do the training</p>
+<p>But again, we need some loss functions to determine the errors we gonna put into back propagation. I will use a simple MSE here. it’s simply the sum of square of the difference between predicted value and training value<br>$$MSE &#x3D; \frac{\sum^n_{i&#x3D;1} (Y_i - \hat Y_i)^2}{n}$$</p>
+<p>And I guess you can directly see the derivative from here</p>
+<span id="more"></span>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Matrix.h&quot;</span>  </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Loss</span> &#123;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">double</span> <span class="title">meanSquaredError</span><span class="params">(<span class="type">const</span> Matrix &amp;predicted, <span class="type">const</span> Matrix &amp;actual)</span></span>;  </span><br><span class="line">    <span class="function"><span class="type">static</span> Matrix <span class="title">meanSquaredErrorDerivative</span><span class="params">(<span class="type">const</span> Matrix &amp;predicted, <span class="type">const</span> Matrix &amp;actual)</span></span>;  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Loss.h&quot;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">double</span> <span class="title">Loss::meanSquaredError</span><span class="params">(<span class="type">const</span> Matrix&amp; predicted, <span class="type">const</span> Matrix&amp; actual)</span> </span>&#123;  </span><br><span class="line">    <span class="keyword">return</span> ((predicted - actual) * (predicted - actual)).<span class="built_in">mean</span>();  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function">Matrix <span class="title">Loss::meanSquaredErrorDerivative</span><span class="params">(<span class="type">const</span> Matrix&amp; predicted, <span class="type">const</span> Matrix&amp; actual)</span> </span>&#123;  </span><br><span class="line"><span class="comment">//    std::cout&lt;&lt; &quot;Predicted: &quot; &lt;&lt; predicted &lt;&lt; std::endl;  </span></span><br><span class="line"><span class="comment">//    std::cout&lt;&lt; &quot;Actual: &quot; &lt;&lt; actual &lt;&lt; std::endl;  </span></span><br><span class="line"><span class="comment">//    std::cout&lt;&lt; &quot;Actual size&quot; &lt;&lt; actual.size() &lt;&lt; std::endl;  </span></span><br><span class="line">    <span class="keyword">return</span> (predicted - actual)*<span class="number">2</span>/actual.<span class="built_in">size</span>();  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h1><p>Now finally, the ending bits. </p>
+<ul>
+<li>The network is gonna take layers and stack them in order</li>
+<li>The network is gonna fit(train), aka change the weights and bias, based on input data</li>
+<li>and it’s need to predict</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../Layers/Layer.h&quot;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;../Math/Loss.h&quot;</span>  </span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Network</span> &#123;  </span><br><span class="line"><span class="keyword">public</span>:  </span><br><span class="line">    <span class="built_in">Network</span>(): <span class="built_in">layers</span>(std::<span class="built_in">vector</span>&lt;Layer&gt;()) &#123;&#125;;  </span><br><span class="line">    ~<span class="built_in">Network</span>();  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">addLayer</span><span class="params">(<span class="type">const</span> Layer&amp; layer)</span></span>;  </span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">fit</span><span class="params">(<span class="type">const</span> Matrix &amp;xTrain, <span class="type">const</span> Matrix &amp;yTrain, <span class="type">int</span> numberOfEpoch, <span class="type">double</span> learningRate)</span></span>;  </span><br><span class="line">    <span class="function">Matrix <span class="title">predict</span><span class="params">(<span class="type">const</span> Matrix&amp; xTest)</span></span>;  </span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getOutputSize</span><span class="params">()</span></span>;  </span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span>:  </span><br><span class="line">    std::vector&lt;Layer&gt; layers;  </span><br><span class="line">  </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Add-layers"><a href="#Add-layers" class="headerlink" title="Add layers"></a>Add layers</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Network.h&quot;</span>  </span></span><br><span class="line">  </span><br><span class="line">Network::~<span class="built_in">Network</span>() = <span class="keyword">default</span>;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Network::addLayer</span><span class="params">(<span class="type">const</span> Layer &amp;layer)</span> </span>&#123;  </span><br><span class="line">    layers.<span class="built_in">push_back</span>(layer);  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+
+<p>The fit method is gonna</p>
+<ul>
+<li>take input consisting of actual value (Y) and its label (X)</li>
+<li>the training time, epoch number</li>
+<li>the learning rate, how much of the gradient we apply to the weights and bias</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Network::fit</span><span class="params">(<span class="type">const</span> Matrix &amp;xTrain, <span class="type">const</span> Matrix &amp;yTrain, <span class="type">int</span> numberOfEpoch, <span class="type">double</span> learningRate)</span> </span>&#123;  </span><br><span class="line">    <span class="comment">// Check if the number of training data matches the number of labels  </span></span><br><span class="line">    <span class="type">int</span> trainingSize = xTrain.<span class="built_in">rows</span>();  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (trainingSize != yTrain.<span class="built_in">rows</span>()) &#123;  </span><br><span class="line">        <span class="keyword">throw</span> std::<span class="built_in">invalid_argument</span>(<span class="string">&quot;The number of training data does not match the number of labels&quot;</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> epoch = <span class="number">0</span>; epoch &lt; numberOfEpoch; epoch++) &#123;  </span><br><span class="line">        <span class="type">double</span> mse = <span class="number">0</span>;  </span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; trainingSize; ++i) &#123;  </span><br><span class="line">            Matrix output = xTrain.<span class="built_in">getRow</span>(i);  </span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;layer: layers) &#123;  </span><br><span class="line">                output = layer.forwardPropagation(output);  </span><br><span class="line">            &#125;  </span><br><span class="line">			<span class="comment">// We actually don&#x27;t need this for computation, but we can print it to see if the training is doing properly</span></span><br><span class="line">            mse += Loss::<span class="built_in">meanSquaredError</span>(output, yTrain.<span class="built_in">getRow</span>(i));  </span><br><span class="line">	</span><br><span class="line">			<span class="comment">// The dE/dY</span></span><br><span class="line">            Matrix err = Loss::<span class="built_in">meanSquaredErrorDerivative</span>(output, yTrain.<span class="built_in">getRow</span>(i));  </span><br><span class="line"></span><br><span class="line">			<span class="comment">//remeber it&#x27;s back not forward, so we do it in reverse</span></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">auto</span> it = layers.<span class="built_in">rbegin</span>(); it != layers.<span class="built_in">rend</span>(); ++it) &#123;  </span><br><span class="line">                err = it-&gt;<span class="built_in">backwardPropagation</span>(err, learningRate);  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">		</span><br><span class="line">        mse /= trainingSize;  </span><br><span class="line">        std::cout &lt;&lt; <span class="string">&quot;Epoch &quot;</span> &lt;&lt; epoch &lt;&lt; <span class="string">&quot; MSE: &quot;</span> &lt;&lt; mse &lt;&lt; std::endl;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<h1 id="Predict"><a href="#Predict" class="headerlink" title="Predict"></a>Predict</h1><p>Prediction is rather easy, just propagate through all the layer and you will have the answer.</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Matrix <span class="title">Network::predict</span><span class="params">(<span class="type">const</span> Matrix&amp; xTest)</span> </span>&#123;  </span><br><span class="line">    <span class="type">int</span> testingSize = xTest.<span class="built_in">rows</span>();  </span><br><span class="line">    <span class="function">Matrix <span class="title">result</span><span class="params">(<span class="number">0</span>, getOutputSize())</span></span>;  </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; testingSize; ++i) &#123;  </span><br><span class="line">        Matrix output = xTest.<span class="built_in">getRow</span>(i);  </span><br><span class="line">  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> &amp;layer: layers) &#123;  </span><br><span class="line">            output = layer.forwardPropagation(output);  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        result.<span class="built_in">addRow</span>(output);  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="keyword">return</span> result;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">Network::getOutputSize</span><span class="params">()</span> </span>&#123;  </span><br><span class="line">    <span class="comment">// check if the layer is not an activation layer reversely  </span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">auto</span> it = layers.<span class="built_in">rbegin</span>(); it != layers.<span class="built_in">rend</span>(); ++it) &#123;  </span><br><span class="line">        <span class="keyword">if</span> (!it-&gt;<span class="built_in">isActivationLayer</span>()) &#123;  </span><br><span class="line">            <span class="keyword">return</span> it-&gt;<span class="built_in">getOutputSize</span>();  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Test-the-code"><a href="#Test-the-code" class="headerlink" title="Test the code"></a>Test the code</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span>  </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Networks/Network.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//XOR gate</span></span><br><span class="line">	<span class="keyword">auto</span> xTrain = <span class="built_in">Matrix</span>(&#123;&#123;<span class="number">0</span>,<span class="number">0</span>&#125;, &#123;<span class="number">0</span>,<span class="number">1</span>&#125;, &#123;<span class="number">1</span>,<span class="number">0</span>&#125;, &#123;<span class="number">1</span>,<span class="number">1</span>&#125;&#125;);  </span><br><span class="line">	<span class="keyword">auto</span> yTrain = <span class="built_in">Matrix</span>(&#123;&#123;<span class="number">0</span>&#125;, &#123;<span class="number">1</span>&#125;, &#123;<span class="number">1</span>&#125;, &#123;<span class="number">0</span>&#125;&#125;);  </span><br><span class="line"></span><br><span class="line">	Network network = <span class="built_in">Network</span>();  </span><br><span class="line">	network.<span class="built_in">addLayer</span>(<span class="built_in">Layer</span>(<span class="number">2</span>, <span class="number">3</span>));  </span><br><span class="line">	network.<span class="built_in">addLayer</span>(<span class="built_in">Layer</span>(ActivationFunctionType::TANH));  </span><br><span class="line">	network.<span class="built_in">addLayer</span>(<span class="built_in">Layer</span>(<span class="number">3</span>,<span class="number">1</span>));  </span><br><span class="line">	network.<span class="built_in">addLayer</span>(<span class="built_in">Layer</span>(ActivationFunctionType::TANH));  </span><br><span class="line">	network.<span class="built_in">fit</span>(xTrain, yTrain, <span class="number">100</span>, <span class="number">0.1</span>);  </span><br><span class="line"></span><br><span class="line">	<span class="keyword">auto</span> result = network.<span class="built_in">predict</span>(xTrain);  </span><br><span class="line">	std::cout &lt;&lt; result &lt;&lt; std::endl;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The output</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Epoch 1 MSE: 0.48139</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">Epoch 99 MSE: 0.0133901</span><br><span class="line">0.0314563, </span><br><span class="line">0.886822, </span><br><span class="line">0.819525, </span><br><span class="line">-0.00120216, </span><br></pre></td></tr></table></figure>
+
+<p>Here we go, we get the fairly accurate output with a small epoch number. </p>
+<p>And we can also use the model on 2D images like the famous mnist dataset. The idea is convert the 2d image into a 1D array and create the initial activation layer with input size equals to the image size. However, it requires some image processing code which we will be doing in another day.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/deep-learning/" rel="tag"># deep-learning</a>
+              <a href="/tags/c/" rel="tag"># c++</a>
+              <a href="/tags/machine-learning/" rel="tag"># machine-learning</a>
+              <a href="/tags/neural-network/" rel="tag"># neural-network</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/" rel="prev" title="Very Naive Neural Network in C++ Part 3 Layers">
+                  <i class="fa fa-chevron-left"></i> Very Naive Neural Network in C++ Part 3 Layers
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/06/02/System/archlinux-zoom-oversized-window/" rel="next" title="Missing or Oversized Zoom Window on Arch">
+                  Missing or Oversized Zoom Window on Arch <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    
+  <div class="comments" id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </div>
+  
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">A Random Cat Friend</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+<script class="next-config" data-name="disqus" type="application/json">{"enable":true,"shortname":"greasycat","count":true,"i18n":{"disqus":"disqus"}}</script>
+<script src="/js/third-party/comments/disqus.js"></script>
+
+</body>
+</html>

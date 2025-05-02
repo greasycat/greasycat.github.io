@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2025/05/01/System/neovide-setup-in-wsl-archilinux/</loc>
+    
+    <lastmod>2025-05-02</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-3/</loc>
+    
+    <lastmod>2022-12-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-4%20Network/</loc>
+    
+    <lastmod>2022-12-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-2/</loc>
+    
+    <lastmod>2022-12-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2021/01/05/Code/Naive-Neural-Network-in-Cpp-1/</loc>
+    
+    <lastmod>2022-12-16</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/404/index.html</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2022/11/19/System/archlinux-easy-setup-for-deep-learning/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2022/11/19/Gallery/Cat/Funny/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2022/06/02/System/archlinux-zoom-oversized-window/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/2022/06/03/System/archlinux-emoji-display-problem/</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/categories/index.html</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/index.html</loc>
+    
+    <lastmod>2022-11-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  <url>
+    <loc>https://www.greasycat.xyz/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/archlinux/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/installation/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/deep-learning/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/zoom/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/solved/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/c/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/machine-learning/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/neural-network/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/wsl/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/neovide/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/tags/neovim/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>https://www.greasycat.xyz/categories/System/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/categories/Gallery/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/categories/Gallery/Cat/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.greasycat.xyz/categories/Code/</loc>
+    <lastmod>2025-05-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+</urlset>
