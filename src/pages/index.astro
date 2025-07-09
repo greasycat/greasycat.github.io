@@ -1,0 +1,107 @@
+---
+type Post = {
+  url: string;
+  frontmatter: {
+    title: string;
+    created: string;
+  };
+};
+const posts: Post[] = (
+  Object.values(import.meta.glob("./posts/*.md", { eager: true })) as Post[]
+).sort(
+  (a, b) =>
+    new Date(b.frontmatter.created).getTime() -
+    new Date(a.frontmatter.created).getTime()
+);
+const title = "Greasycat's Blog";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <style>
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        min-height: 100vh;
+        background-color: #fff;
+        text-align: center;
+      }
+
+	  .posts {
+		margin-top: 2rem;
+	  }
+
+	  .date {
+		font-size: 0.8rem;
+		color: #666;
+	  }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: #2c3e50;
+      }
+
+      p {
+        margin-bottom: 1rem;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 0.75rem;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+        
+        h1 {
+          font-size: 1.75rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+	
+    <h1>{title}</h1>
+
+	<div class="posts">
+		<ul>
+		{
+			posts.map((post) => (
+			<li>
+				<a href={post.url}>{post.frontmatter.title}</a>
+				<span class="date">{post.frontmatter.created}</span>
+			</li>
+			))
+		}
+		</ul>
+	</div>
+  </body>
+</html>
