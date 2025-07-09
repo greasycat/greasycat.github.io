@@ -4,8 +4,11 @@ import remarkToc from 'remark-toc'
 import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
 
+import sitemap from '@astrojs/sitemap';
+
 export default defineConfig({
   site: 'https://greasycat.github.io',
+
   markdown: {
     remarkPlugins: [remarkMath, remarkToc],
     rehypePlugins: [rehypeMathjax],
@@ -16,5 +19,6 @@ export default defineConfig({
       },
     },
   },
-});
 
+  integrations: [sitemap()],
+});
