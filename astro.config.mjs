@@ -5,6 +5,7 @@ import remarkMath from 'remark-math';
 import rehypeMathjax from 'rehype-mathjax';
 
 export default defineConfig({
+  site: 'https://greasycat.github.io',
   markdown: {
     remarkPlugins: [remarkMath, remarkToc],
     rehypePlugins: [rehypeMathjax],

@@ -1,8 +1,8 @@
 ---
-title: 'Markdown for testing'
+title: 'Markdown for Testing'
 author: 'greasycat'
-layout: ../../layouts/Post.astro
-created: '2025-07-09'
+layout: ../../layouts/post.astro
+date: 1900-01-01
 ---
 # This is a testing markdown file
 

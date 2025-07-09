@@ -19,49 +19,71 @@ const { frontmatter } = Astro.props;
         background-color: #fafafa;
       }
       
-      .container {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 2rem;
-        background-color: white;
-        min-height: 100vh;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        position: relative;
-      }
-
-      .back-button {
-        display: inline-block;
-        margin-bottom: 2rem;
-      }
-
-      .back-button,
-      .back-button:visited,
-      .back-button:hover,
-      .back-button:active,
-      .back-button:focus {
-        color: inherit;
-        text-decoration: none;
-        background: none;
-        border: none;
-        padding: 0;
-        margin: 0;
-        font: inherit;
-        cursor: pointer;
-        outline: none;
-        box-shadow: none;
-        transform: none;
-      }
-      
       blockquote {
         background-color: #f0f0f0;
         border: 1px solid #e0e0e0;
         padding-left: 1rem;
       }
 
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+        padding-top: 1rem;
+        background-color: white;
+        min-height: 100vh;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .nav {
+        display: flex;
+        justify-content:center;
+        align-items: center;
+      }
+
+      .back-button {
+        color: inherit;
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        font-weight: 600;
+      }
+      
+
+      /* code blocks */
       .astro-code {
         border: 1px solid #e0e0e0;
         padding: 1rem;
       }
+
+      .meta {
+        font-size: 0.8rem;
+        color: #666;
+
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+        width: 100%;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .readtime {
+        margin-left: 1rem;
+      }
+
+      .date {
+        margin-right: 1rem;
+      }
+
+      /* inline code */
+      p > code {
+        background-color: #f0f0f0;
+      }
+
 
       /* Mobile Responsive Styles */
       @media (max-width: 768px) {
@@ -186,9 +208,22 @@ const { frontmatter } = Astro.props;
   </head>
   <body>
     <div class="container">
-      <a href="/" class="back-button">
-        Home
-      </a>
+      <div class="nav">
+        <a href="/" class="back-button">
+          Home
+        </a>
+      </div>
+      <div class="meta">
+        <div class="readtime">
+          Reading: {frontmatter.readtime} min
+        </div>
+        <div class="title">
+          {frontmatter.title}
+        </div>
+        <div class="date">
+          {new Date(frontmatter.date).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC'})}
+        </div>
+      </div>
       <slot />
     </div>
   </body>
