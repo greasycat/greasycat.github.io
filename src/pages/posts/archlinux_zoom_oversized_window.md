@@ -1,5 +1,5 @@
 ---
-title: Missing or Oversized Zoom Window on Arch
+title: Missing or Oversized Zoom Window on Archlinux
 layout: ../../layouts/post.astro
 tags:
   - archlinux

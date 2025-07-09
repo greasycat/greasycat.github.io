@@ -1,5 +1,5 @@
 ---
-title: Emoji Not Showing Properly on Archlinux.md
+title: Emoji Not Showing Properly on Archlinux
 layout: ../../layouts/post.astro
 categories:
   - System

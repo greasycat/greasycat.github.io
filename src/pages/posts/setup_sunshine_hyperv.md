@@ -1,5 +1,5 @@
 ---
-title: Set up Sunshine steaming in Windows Hyper-V with GPU partitioning
+title: Set up Sunshine Streaming in Windows Hyper-V with GPU Partitioning
 layout: ../../layouts/post.astro
 tags: 'hyperv, sunshine, gaming'
 categories:
@@ -7,7 +7,7 @@ categories:
 date: 2025-04-10 15:48:18
 ---
 
-# Set up Sunshine steaming in Windows Hyper-V with GPU Parititoning enabled
+# Set up Sunshine Streaming in Windows Hyper-V with GPU Partitioning enabled
 
 Why gaming on a virtual machine?
 
