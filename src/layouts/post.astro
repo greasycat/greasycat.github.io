@@ -1,5 +1,6 @@
 ---
 const { frontmatter } = Astro.props;
+const readtime = frontmatter.readtime ? frontmatter.readtime + " min" : "Unknown";
 ---
 
 <html>
@@ -215,7 +216,7 @@ const { frontmatter } = Astro.props;
       </div>
       <div class="meta">
         <div class="readtime">
-          Reading: {frontmatter.readtime} min
+          ETA: {readtime}
         </div>
         <div class="title">
           {frontmatter.title}
