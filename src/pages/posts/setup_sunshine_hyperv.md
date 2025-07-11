@@ -1,5 +1,5 @@
 ---
-title: Set up Sunshine Streaming in Windows Hyper-V with GPU Partitioning
+title: "[Setup] Sunshine Streaming in Windows Hyper-V with GPU Partitioning"
 layout: ../../layouts/post.astro
 tags: 'hyperv, sunshine, gaming'
 categories:

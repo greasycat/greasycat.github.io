@@ -1,5 +1,5 @@
 ---
-title: Archlinux Easy Setup for Deep Learning
+title: "[Setup] Deep Learning in Archlinux"
 layout: ../../layouts/post.astro
 categories:
   - System

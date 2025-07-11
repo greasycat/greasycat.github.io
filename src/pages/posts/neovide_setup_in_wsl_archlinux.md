@@ -1,5 +1,5 @@
 ---
-title: Setup Neovide in WSL
+title:  "[Setup] Neovide in WSL"
 layout: ../../layouts/post.astro
 categories:
   - System
