@@ -39,7 +39,7 @@ def build_parser():
 
 
 def get_editor():
-    if "EDIOTR" in os.environ:
+    if "EDITOR" in os.environ:
         editor = os.environ["EDITOR"]
         return editor
     else:

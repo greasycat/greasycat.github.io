@@ -6,7 +6,8 @@ type Post = {
     date: string;
   };
 };
-const posts: Post[] = (
+
+const posts = (
   Object.values(import.meta.glob("./posts/*.md", { eager: true })) as Post[]
 ).sort(
   (a, b) =>
@@ -14,15 +15,17 @@ const posts: Post[] = (
     new Date(a.frontmatter.date).getTime()
 );
 
-// Group posts by year
-const postsByYear = posts.reduce((acc, post) => {
-  const year = new Date(post.frontmatter.date).getFullYear();
-  if (!acc[year]) {
-    acc[year] = [];
-  }
-  acc[year].push(post);
-  return acc;
-}, {} as Record<number, Post[]>);
+const postsByYear = posts.reduce(
+  (acc, post) => {
+    const year = new Date(post.frontmatter.date).getUTCFullYear();
+    if (!acc[year]) {
+      acc[year] = [];
+    }
+    acc[year].push(post);
+    return acc;
+  },
+  {} as Record<number, Post[]>
+);
 
 const title = "Flow";
 const description = "by Greasycat";
@@ -34,9 +37,17 @@ const description = "by Greasycat";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="google-site-verification" content="qWFketyAMIjocSl4PlwnlcBO9ctad9q4i_-zmdVQXbA" />
+    <meta name="description" content="Writing archive by Greasycat." />
     <title>{title}</title>
     <style>
+      @font-face {
+        font-family: "Inter";
+        src: url("/fonts/Inter.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
       body {
         font-family:
           "Inter",
@@ -55,21 +66,22 @@ const description = "by Greasycat";
         background-color: #fff;
       }
 
-	  .title {
-		font-size: 2rem;
-		font-weight: 600;
-		color: #2c3e50;
-		text-align: center;
-		margin-bottom: 0;
-	  }
+      .title {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        text-align: center;
+        margin-bottom: 0;
+      }
 
-	  .description {
-		font-size: 0.8rem;
-		color: #666;
-		margin-top: 0;
-		margin-bottom: 1rem;
-		text-align: center;
-	  }
+      .description {
+        font-size: 0.8rem;
+        color: #666;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        text-align: center;
+      }
+
       .posts {
         margin-top: 2rem;
       }
@@ -92,14 +104,6 @@ const description = "by Greasycat";
         color: #666;
       }
 
-	  .footer {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		margin-top: 20rem;
-		height: 200px;
-	  }
-
       h1 {
         font-size: 2rem;
         margin-bottom: 1rem;
@@ -113,14 +117,14 @@ const description = "by Greasycat";
       ul {
         list-style: none;
         padding: 0;
-		padding-left: 1rem;
+        padding-left: 1rem;
       }
 
       li {
         margin-bottom: 0.75rem;
-		display: flex;
-		justify-content: space-between;
-
+        display: flex;
+        justify-content: space-between;
+        gap: 1rem;
       }
 
       a {
@@ -132,7 +136,7 @@ const description = "by Greasycat";
         body {
           padding: 1rem;
         }
-        
+
         h1 {
           font-size: 1.75rem;
         }
@@ -145,7 +149,7 @@ const description = "by Greasycat";
   </head>
   <body>
     <h1 class="title">{title}</h1>
-	<p class="description">{description}</p>
+    <p class="description">{description}</p>
 
     <div class="posts">
       {
@@ -160,7 +164,10 @@ const description = "by Greasycat";
                     <li>
                       <a href={post.url}>{post.frontmatter.title}</a>
                       <span class="date">
-                        {new Date(post.frontmatter.date).toLocaleString('en-US', { month: 'short'})}
+                        {new Date(post.frontmatter.date).toLocaleString("en-US", {
+                          month: "short",
+                          timeZone: "UTC",
+                        })}
                       </span>
                     </li>
                   ))
@@ -169,10 +176,6 @@ const description = "by Greasycat";
             </div>
           ))
       }
-
     </div>
-	<div class="footer">
-		<img src="/images/cateye.jpg" alt="cat" style="transform: scale(0.1);" />
-	</div>
   </body>
 </html>
